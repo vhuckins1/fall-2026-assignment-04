@@ -1,0 +1,54 @@
+erDiagram
+    users {
+        integer id PK
+        varchar email
+        varchar name
+        timestamp created_at
+    }
+
+    borrowers {
+        integer id PK
+        integer user_id FK
+        varchar membership_number
+        varchar phone
+        varchar status
+        timestamp created_at
+    }
+
+    authors {
+        integer id PK
+        varchar name
+        text bio
+    }
+
+    genres {
+        integer id PK
+        varchar name
+        text description
+    }
+
+    books {
+        integer id PK
+        integer author_id FK
+        integer genre_id FK
+        varchar title
+        varchar isbn
+        integer published_year
+        integer copies_available
+    }
+
+    loans {
+        integer id PK
+        integer borrower_id FK
+        integer book_id FK
+        timestamp loan_date
+        timestamp due_date
+        timestamp returned_date
+        varchar status
+    }
+
+    users ||--o| borrowers : "has"
+    authors ||--o{ books : "writes"
+    genres ||--o{ books : "categorizes"
+    borrowers ||--o{ loans : "borrows"
+    books ||--o{ loans : "loaned_in"
